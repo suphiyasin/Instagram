@@ -46,6 +46,24 @@ private function getChallendeContext($response){
 	return $step4[0];
 }
 
+	private function getTwoFactorID($response, $lenght = 1100){
+
+ 	$pattern = '/[a-zA-Z0-9_-]{' . ($length - 100) . ',}/'; 
+   	preg_match_all($pattern, $text, $matches);
+   	$closestMatch = null;
+    	$closestDifference = PHP_INT_MAX;
+    
+	foreach ($matches[0] as $match) {
+		$currentDifference = abs(strlen($match) - $length);
+	        if ($currentDifference < $closestDifference) {
+	            $closestDifference = $currentDifference;
+	            $closestMatch = $match;
+	        }
+	    }
+    
+    return $closestMatch ?? "Two Factor ID Not Found";
+	}
+
 	
 		public function GenrateENCPassword($password = null){
 	$password = $password ?? $this->password;
